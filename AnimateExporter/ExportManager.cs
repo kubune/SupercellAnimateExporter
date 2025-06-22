@@ -10,6 +10,8 @@ namespace AnimateExporter
         public static string exportPath { get; set; } = "";
         public static string baseDir { get; set; } = "";
         public static List<string> allRequierments { get; set; } = [];
+        public static bool allAssets { get; set; } = false;
+        public static string flaName { get; set; } = "";
         public static void Export()
         {
             string LIBRARYPATH = Path.Combine(exportPath.Split(@"\")[0], "LIBRARY");
@@ -38,7 +40,7 @@ namespace AnimateExporter
             allRequierments = processed.ToList(); // Store the final list
             CopyRequierments();
             List<string> bitmaps = CopyAssets();
-            allRequierments.Add(exportPath.Replace(@"ui\LIBRARY\", "").Replace(".xml", "").Replace(@"\", "/"));
+            allRequierments.Add(exportPath.Replace(flaName.Replace(".fla", "") + @"\LIBRARY\", "").Replace(".xml", "").Replace(@"\", "/"));
             Console.WriteLine("Creating DOMDocument");
             DOMDocument.CreateDOMDocument(baseDir + @"\DOMDocument.xml", allRequierments, Directory.GetFiles(Path.Combine(exportPath.Split(@"\")[0], "bin")).Count(), bitmaps);
             Console.WriteLine("Exporting to fla... (TODO)");
@@ -63,11 +65,28 @@ namespace AnimateExporter
         {
             foreach (var req in allRequierments)
             {
-                File.Copy(Path.Combine(exportPath.Split(@"\")[0], "LIBRARY", req + ".xml"), Path.Combine(baseDir + @"\", "LIBRARY", req.Replace("/", @"\") + ".xml"));
+                File.Copy(Path.Combine(exportPath.Split(@"\")[0], "LIBRARY", req.Replace("/", @"\") + ".xml"), Path.Combine(baseDir + @"\", "LIBRARY", req.Replace("/", @"\") + ".xml"));
             }
         }
         public static List<string> CopyAssets()
         {
+            if (allAssets)
+            {
+                List<string> res = Directory.GetFiles(Path.Combine(exportPath.Split(@"\")[0], "LIBRARY", "resources")).ToList();
+                List<string> met = Directory.GetFiles(Path.Combine(exportPath.Split(@"\")[0], "bin")).ToList();
+
+                foreach (var meta in met)
+                {
+                    File.Copy(Path.Combine(meta), Path.Combine(baseDir, "bin", meta.Split(@"\").Last()));
+                }
+                foreach (var reso in res)
+                {
+                    File.Copy(Path.Combine(reso), Path.Combine(baseDir, "LIBRARY", "resources", reso.Split(@"\").Last()));
+                }
+                File.Copy(exportPath, Path.Combine(baseDir, "LIBRARY", "exports", exportPath.Split(@"\").Last()));
+                return res.Concat(met).ToList();
+
+            }
             List<string> shapes = [];
             foreach (string asset in allRequierments)
             {
@@ -94,7 +113,6 @@ namespace AnimateExporter
                 {
                     ;
                 }
-
             }
             foreach (string resource in neededResources)
             {

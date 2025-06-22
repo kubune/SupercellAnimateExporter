@@ -1,10 +1,20 @@
 # SupercellAnimateExporter
-A tool to export ONE export from SupercellSWF platform to a new .fla (Good for low-end PCs)
+A tool to export ONE export from [SupercellSWF](https://github.com/sc-workshop/SupercellSWF-Animate) platform to a new .fla (Good for low-end PCs)
 
-This tool currently has bugs and is open for pull requests.
+![Preview](res/preview1.png)
 
-Everything was working fine until I wanted to optimize the resources (as I was copying all of them) and I just checked shapes then based on them get the resources.
+> Example Usage: `AnimateExporter.exe ui.sc settings_popup true`
 
-Tool is almost working. Thanks to Daniil SV without him I would probably not succeed.
+## Requirements
+- .NET 8.0
 
-Tool made in one day... so the code is shit
+## How to build yourself
+The code is really small and is easy to change even for newbies tho this code style I used here isn't the best. Use `dotnet publish` to build the project.
+
+## Known Bugs
+You absolutely need to use the "true" flag as a last argument (or not, it should use it as default). It copies all the assets and bitmaps from the original .fla to the new one. Putting "false" there will result in not every asset being copied and the export won't be complete with all required assets. 
+
+__You can copy the export to a new .fla as it will copy the required assets then and you should be fine. Take this as a workaround.__
+
+## Credits
+- Daniil SV - for replying to my stupid (for him) questions lol

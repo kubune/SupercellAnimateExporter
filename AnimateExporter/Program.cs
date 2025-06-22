@@ -12,12 +12,16 @@ internal class Program
         Arguments = args.ToList();
         if (Arguments.Count < 2)
         {
-            Console.WriteLine("Usage: AnimateExporter.exe [InputFla] [ExportName]");
+            Console.WriteLine("Usage: AnimateExporter.exe [InputFla] [ExportName] <bool AllAssets?>");
             return;
         }
-        else
+        else if (Arguments.Count == 3)
         {
-            Exporter.Export(Arguments[0], Arguments[1]);
+            Exporter.Export(Arguments[0], [Arguments[1], Arguments[2]]);
+        }
+        else if (Arguments.Count == 2)
+        {
+            Exporter.Export(Arguments[0], [Arguments[1], "true"]); // true by default atm
         }
     }
 }

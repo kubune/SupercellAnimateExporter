@@ -79,7 +79,7 @@ namespace AnimateExporter
                     new XElement(ns + "symbols", symbolItems)
                 )
             );
-            Console.WriteLine(DOMPath);
+            
             doc.Save(DOMPath);
         }
     }

@@ -13,7 +13,7 @@ namespace AnimateExporter
             Directory.CreateDirectory(path + @"LIBRARY\movieclips\");
             Directory.CreateDirectory(path + @"LIBRARY\exports\");
             File.WriteAllText(path + $"{exportName.Split(@"\").Last()}.xfl", "PROXY-CS5");
-            File.OpenWrite(path + "DOMDocument.xml");
+            File.OpenWrite(path + "DOMDocument.xml").Close();
         }
     }
 }

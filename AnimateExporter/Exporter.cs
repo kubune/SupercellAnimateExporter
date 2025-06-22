@@ -5,8 +5,10 @@ namespace AnimateExporter
     public static class Exporter
     {
         public static bool foundExport { get; set; } = false;
-        public static int Export(string inputFla, string exportName)
+        public static int Export(string inputFla, List<string> args)
         {
+            string exportName = args[0];
+            bool allAssets = args[1] == "true";
             Console.WriteLine($"UnZipping {inputFla}");
             string outputZip = UnZIP(inputFla);
             Console.WriteLine($"Creating base {exportName} fla");
@@ -20,6 +22,8 @@ namespace AnimateExporter
                     Console.WriteLine($"Found export at {export}");
                     ExportManager.exportPath = export;
                     ExportManager.baseDir = Environment.CurrentDirectory + @"\" + exportName;
+                    ExportManager.allAssets = allAssets;
+                    ExportManager.flaName = inputFla;
                     ExportManager.Export();
                 }
             }
