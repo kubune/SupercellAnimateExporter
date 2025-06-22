@@ -17,4 +17,4 @@ You absolutely need to use the "true" flag as a last argument (or not, it should
 __You can copy the export to a new .fla as it will copy the required assets then and you should be fine. Take this as a workaround.__
 
 ## Credits
-- Daniil SV - for replying to my stupid (for him) questions lol
+- [Daniil SV](https://github.com/Daniil-SV) - for replying to my stupid (for him) questions lol
